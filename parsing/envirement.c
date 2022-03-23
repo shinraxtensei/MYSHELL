@@ -27,6 +27,7 @@ static void env_setup(char **env, t_meta_data *data)
     i = -1;
     while (env[++i])
         data->env_data.env[i] = ft_strdup(env[i]);
+    data->env_data.env[i] = 0;
     
 }
 
