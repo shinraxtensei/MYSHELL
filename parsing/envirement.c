@@ -33,13 +33,7 @@ static void env_setup(char **env, t_meta_data *data)
 
 int env_maker(char **env, t_meta_data *data)
 {
-    int i = 0; 
     env_setup (env, data);
     shelllevel_upddater (data);
-        while (data->env_data.env[i])
-    {
-        printf("%s\n", data->env_data.env[i]);
-        i++;
-    }
     return 0;
 }
