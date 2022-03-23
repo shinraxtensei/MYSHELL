@@ -20,7 +20,15 @@
 // }
 void env_setup(char **env, t_meta_data *data)
 {
-    
+    int i;
+
+    i = 0;
+    while (env[i])
+        i++;
+    data->env.env = malloc (sizeof(char *) * i + 1);
+    i = -1;
+    while (env[++i])
+        data->env.env[i] = ft_strdup(env[i]);
 }
 
 int main (int ac, char **argv, char **env)
