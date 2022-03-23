@@ -24,4 +24,11 @@ typedef struct s_metadata
 int env_maker(char **env, t_meta_data *data);
 int ft_strcmp(char *s1, char *s2);
 
+
+//--------- | envirement | -----------
+
+void ft_env(t_meta_data *data);
+void ft_export(t_meta_data *data);
+int execution_env(t_meta_data *data);
+
 #endif
