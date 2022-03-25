@@ -6,7 +6,7 @@
 /*   By: ahouari <ahouari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 08:37:40 by ahouari           #+#    #+#             */
-/*   Updated: 2022/02/11 08:37:41 by ahouari          ###   ########.fr       */
+/*   Updated: 2022/03/25 11:28:09 by ahouari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ static int	count_words(char const *str, char c)
 	{
 		if (str[i] == c)
 		{
-			i++;
-			continue ;
+			i++;  
+			continue;
 		}
 		count++;
 		while (str[i] != c && str[i])
