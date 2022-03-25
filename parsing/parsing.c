@@ -78,7 +78,7 @@ int *l9ali_index(char *str, int words)
     i = -1;
     j = 0;
     quotes = 0;
-    indexes = malloc (sizeof(int) * words - 1);
+    indexes = malloc (sizeof(int) * words);
     while (str[++i])
     {
         if (str[i] == '\"' || str[i] == '\'')
@@ -89,6 +89,7 @@ int *l9ali_index(char *str, int words)
             j++;
         }
     }
+    indexes[j] = -1;
     return (indexes);
 }
 
@@ -98,14 +99,15 @@ char **split_pipes(char *str)
     int words;
     int *indexes;
     int i;
+    int j;
     words = words_count(str);
     indexes = l9ali_index(str, words);
-    strs = malloc(sizeof(char) * words + 1);
-    // char *test = ft_substr(str , 0, 6); 
-    // printf("%s\n", test);
-    
+    for (i = 0; indexes[i] != -1 ; i++)
+        printf("%d   ", indexes[i]);
+    printf("\n");
+    strs = malloc(sizeof(char *) * (words + 1));
     i = 0;
-    int j = 0;
+    j = 0;
     while (i < words - 1 && str)
     {
         if (i == 0)
@@ -127,5 +129,5 @@ char **split_pipes(char *str)
 #include <stdio.h>
 int main()
 {
-    split_pipes("ls -l | grep \"test | allah\"| 796");
+    split_pipes("ls -l | grep \"test | allah\"| 796 | feew \" | wefwe\"");
 }
