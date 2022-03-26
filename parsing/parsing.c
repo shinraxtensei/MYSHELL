@@ -27,11 +27,11 @@ return (index);
 //             quotes++;
 //         i++;
 //     }
-//     if(quotes % 2 != 0)
-//     {
-//         printf("error: invalid quotes");
-//         exit(1);
-//     }
+    // if(quotes % 2 != 0)
+    // {
+    //     printf("error: invalid quotes");
+    //     exit(1);
+    // }
 //     strs = malloc(sizeof(char *) * (quotes / 2) + 2);
  
 //     i = 0;
@@ -55,15 +55,28 @@ return (index);
 
 int words_count(char *str)
 {
-    int  i = -1;
-    int  words = 1;
-    int quotes = 0;
+    int  i;
+    int  words;
+    int quotes1;
+    int quotes2;
+
+    i = -1;
+    quotes1 = 0;
+    words = 1;
+    quotes2 = 0;
     while (str[++i])
     {
-        if (str[i] == '\"' || str[i] == '\'')
-            quotes++;
-        if ((str[i] == '|') && quotes % 2 == 0)
+        if (str[i] == '\"' && quotes2 % 2 == 0)
+            quotes1++;
+        if (str[i] == '\'' && quotes1 % 2 == 0)
+            quotes2++;
+        if ((str[i] == '|') && quotes1 % 2 == 0 && quotes2 % 2 == 0)
             words++;
+    }
+    if(quotes1 % 2 != 0 || quotes2 % 2 != 0)
+    {
+        printf("error: invalid quotes");
+        exit(1);
     }
     return (words);
 }
@@ -73,21 +86,30 @@ int *l9ali_index(char *str, int words)
     int *indexes;
     int i;
     int j;
-    int quotes;
+    int quotes1;
+    int quotes2;
 
     i = -1;
     j = 0;
-    quotes = 0;
+    quotes1 = 0;
+    quotes2 = 0;
     indexes = malloc (sizeof(int) * words);
     while (str[++i])
     {
-        if (str[i] == '\"' || str[i] == '\'')
-            quotes++;
-        if ((str[i] == '|') && quotes % 2 == 0)
+        if (str[i] == '\'' && quotes2 % 2 == 0)
+            quotes1++;
+        if (str[i] == '\"' && quotes1 % 2 == 0)
+            quotes2++;
+        if ((str[i] == '|') && quotes1 % 2 == 0 && quotes2 % 2 == 0)
         {
             indexes[j] = i;
             j++;
         }
+    }
+    if(quotes1 % 2 != 0 || quotes2 % 2 != 0)
+    {
+        printf("error: invalid quotes");
+        exit(1);
     }
     indexes[j] = -1;
     return (indexes);
@@ -129,5 +151,5 @@ char **split_pipes(char *str)
 #include <stdio.h>
 int main()
 {
-    split_pipes("ls -l | grep \"test | allah\"| 796 | feew \" | wefwe\"");
+    split_pipes("ls -l | grep t\'est | all\'ah| 796 \| feew  |  |wefwe");
 }
