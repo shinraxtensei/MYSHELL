@@ -12,7 +12,7 @@ int main (int ac, char **argv, char **env)
     {
         i = -1;
         data.input = readline("minishell :");
-        parsing(&data);
+        // parsing(&data);
         if (execution_env(&data) == 0)
             break ;
     }

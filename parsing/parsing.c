@@ -53,7 +53,7 @@ return (index);
 // }
 
 
-int words_count(char *str)
+int words_count(char *str , char c)
 {
     int  i;
     int  words;
@@ -70,7 +70,7 @@ int words_count(char *str)
             quotes1++;
         if (str[i] == '\'' && quotes1 % 2 == 0)
             quotes2++;
-        if ((str[i] == '|') && quotes1 % 2 == 0 && quotes2 % 2 == 0)
+        if ((str[i] == c) && quotes1 % 2 == 0 && quotes2 % 2 == 0)
             words++;
     }
     if(quotes1 % 2 != 0 || quotes2 % 2 != 0)
@@ -81,7 +81,7 @@ int words_count(char *str)
     return (words);
 }
 
-int *l9ali_index(char *str, int words)
+int *quotes_indexer(char *str,char c ,int words)
 {
     int *indexes;
     int i;
@@ -100,7 +100,7 @@ int *l9ali_index(char *str, int words)
             quotes1++;
         if (str[i] == '\"' && quotes1 % 2 == 0)
             quotes2++;
-        if ((str[i] == '|') && quotes1 % 2 == 0 && quotes2 % 2 == 0)
+        if ((str[i] == c) && quotes1 % 2 == 0 && quotes2 % 2 == 0)
         {
             indexes[j] = i;
             j++;
@@ -115,18 +115,15 @@ int *l9ali_index(char *str, int words)
     return (indexes);
 }
 
-char **split_pipes(char *str)
+char **split_things(char *str , char c)
 {
     char **strs;
     int words;
     int *indexes;
     int i;
     int j;
-    words = words_count(str);
-    indexes = l9ali_index(str, words);
-    for (i = 0; indexes[i] != -1 ; i++)
-        printf("%d   ", indexes[i]);
-    printf("\n");
+    words = words_count(str, c);
+    indexes = quotes_indexer(str, c, words);
     strs = malloc(sizeof(char *) * (words + 1));
     i = 0;
     j = 0;
@@ -140,7 +137,7 @@ char **split_pipes(char *str)
         i++;
     }
     j++;
-    strs[i] = ft_substr(str , j ,ft_strlen(str - indexes[i]));
+    strs[i] = ft_substr(str , j - 1 ,ft_strlen(str - indexes[i]));
   
     i  = -1;
     while (++i < words)
@@ -151,5 +148,5 @@ char **split_pipes(char *str)
 #include <stdio.h>
 int main()
 {
-    split_pipes("ls -l | grep t\'est | all\'ah| 796 \| feew  |  |wefwe");
+    split_things("test  | | \"allah allo\"" , ' ');
 }
