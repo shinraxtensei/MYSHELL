@@ -1,7 +1,6 @@
 #include "../minishell.h"
 
-
-static int quotes_index(char *str , char quote)
+static int characters_index(char *str , char quote)
 {
 char *e;
 int index;
@@ -52,6 +51,25 @@ return (index);
     
 // }
 
+void check_everything(char *str , char c)
+{
+    int i = -1;
+    int flag = 0;
+    while (str[++i] != c)
+    {
+        if (str[i] != ' ')
+        {
+            flag = 1;
+            break;
+        }
+    }
+    if (flag == 0)
+    {
+        printf("zahya espace \n");
+        exit(1);
+    }
+}
+
 
 int words_count(char *str , char c)
 {
@@ -71,11 +89,14 @@ int words_count(char *str , char c)
         if (str[i] == '\'' && quotes1 % 2 == 0)
             quotes2++;
         if ((str[i] == c) && quotes1 % 2 == 0 && quotes2 % 2 == 0)
+        {
+            check_everything(&str[i + 1] ,str[i]);
             words++;
+        }
     }
     if(quotes1 % 2 != 0 || quotes2 % 2 != 0)
     {
-        printf("error: invalid quotes");
+        printf("error: invalid quotes\n");
         exit(1);
     }
     return (words);
@@ -102,6 +123,7 @@ int *quotes_indexer(char *str,char c ,int words)
             quotes2++;
         if ((str[i] == c) && quotes1 % 2 == 0 && quotes2 % 2 == 0)
         {
+            check_everything(&str[i + 1] , str[i]);
             indexes[j] = i;
             j++;
         }
@@ -146,7 +168,9 @@ char **split_things(char *str , char c)
 }
 
 #include <stdio.h>
+
 int main()
 {
-    split_things("test  | | \"allah allo\"" , ' ');
+
+    split_things("test |   | \"allah\' allo\"" , '|');
 }

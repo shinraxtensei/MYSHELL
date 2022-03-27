@@ -6,7 +6,7 @@
 /*   By: ahouari <ahouari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 08:38:57 by ahouari           #+#    #+#             */
-/*   Updated: 2022/03/23 09:33:35 by ahouari          ###   ########.fr       */
+/*   Updated: 2022/03/27 09:45:52 by ahouari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 typedef struct s_command
 {
+    char **whole_command;
     char *cmd;
     char *option;
     char **args;
