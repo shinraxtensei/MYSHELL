@@ -17,7 +17,7 @@ typedef struct s_metadata
 {
     char *input; /* readline input */
     struct s_env_data env_data; /* env structure */
-    struct s_list *commands; /* linked list of commands */
+    struct s_list **commands; /* linked list of commands */
     
 } t_meta_data;
  
@@ -30,5 +30,9 @@ int ft_strcmp(char *s1, char *s2);
 void ft_env(t_meta_data *data);
 void ft_export(t_meta_data *data);
 int execution_env(t_meta_data *data);
+
+//--------- | parsing | -----------
+char **split_things(char *str , char c);
+int parsing(t_meta_data *data);
 
 #endif

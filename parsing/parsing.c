@@ -1,15 +1,15 @@
 #include "../minishell.h"
 
-static int characters_index(char *str , char quote)
-{
-char *e;
-int index;
+// static int characters_index(char *str , char quote)
+// {
+// char *e;
+// int index;
 
-if(!(e = strchr(str, quote)))
-    return -1;
-index = (int)(e - str);
-return (index);
-}
+// if(!(e = strchr(str, quote)))
+//     return -1;
+// index = (int)(e - str);
+// return (index);
+// }
 
 
 // char **quotes_manager(t_meta_data *data)
@@ -51,7 +51,7 @@ return (index);
     
 // }
 
-void check_everything(char *str , char c)
+static void check_everything(char *str , char c)
 {
     int i = -1;
     int flag = 0;
@@ -71,7 +71,7 @@ void check_everything(char *str , char c)
 }
 
 
-int words_count(char *str , char c)
+static int words_count(char *str , char c)
 {
     int  i;
     int  words;
@@ -102,7 +102,7 @@ int words_count(char *str , char c)
     return (words);
 }
 
-int *quotes_indexer(char *str,char c ,int words)
+static int *quotes_indexer(char *str,char c ,int words)
 {
     int *indexes;
     int i;
@@ -137,7 +137,7 @@ int *quotes_indexer(char *str,char c ,int words)
     return (indexes);
 }
 
-char **split_things(char *str , char c)
+ char **split_things(char *str , char c)
 {
     char **strs;
     int words;
@@ -160,17 +160,20 @@ char **split_things(char *str , char c)
     }
     j++;
     strs[i] = ft_substr(str , j - 1 ,ft_strlen(str - indexes[i]));
-  
-    i  = -1;
-    while (++i < words)
-        printf("%s\n", strs[i]);
+    i++;
+    strs[i] = NULL;
     return strs;
 }
 
-#include <stdio.h>
-
-int main()
+int parsing(t_meta_data *data)
 {
-
-    split_things("test |   | \"allah\' allo\"" , '|');
+    char **strs;
+    strs = split_things(data->input , '|');
+    int len = 0;
+    while (strs[len])
+        ++len;
+    int  i = -1;
+    while (++i < len)
+        ft_lstadd_back(data->commands,ft_lstnew(strs[i]));
+    return (0);
 }
