@@ -7,7 +7,7 @@ OBJS	= $(SRCS:.c=.o)
 
 LIBFT = libft/libft.a
 
-CFLAGS =  -Wall -Wextra -Werror
+CFLAGS =  -Wall -Wextra -Werror -g
 
 HEADER = minishell.h
 

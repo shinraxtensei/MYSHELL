@@ -90,7 +90,8 @@ static int words_count(char *str , char c)
             quotes2++;
         if ((str[i] == c) && quotes1 % 2 == 0 && quotes2 % 2 == 0)
         {
-            check_everything(&str[i + 1] ,str[i]);
+            if(c != ' ')
+                check_everything(&str[i + 1] ,str[i]);
             words++;
         }
     }
@@ -123,7 +124,8 @@ static int *quotes_indexer(char *str,char c ,int words)
             quotes2++;
         if ((str[i] == c) && quotes1 % 2 == 0 && quotes2 % 2 == 0)
         {
-            check_everything(&str[i + 1] , str[i]);
+            if(c != ' ')
+                check_everything(&str[i + 1] ,str[i]);
             indexes[j] = i;
             j++;
         }
@@ -149,31 +151,67 @@ static int *quotes_indexer(char *str,char c ,int words)
     strs = malloc(sizeof(char *) * (words + 1));
     i = 0;
     j = 0;
-    while (i < words - 1 && str)
+    if(words == 1)
     {
-        if (i == 0)
-            strs[i] = ft_substr(str , j, indexes[i]);
-        else
-            strs[i] = ft_substr(str , j, indexes[i]  - indexes[i - 1] - 1);
-        j = indexes[i] + 1;
-        i++;
+        strs[0] = ft_substr(str , 0, ft_strlen(str));
+        strs[1] = NULL;
+        return strs;
+    }
+    else
+    {
+        while (i < words - 1 && str)
+        {
+
+            if (i == 0)
+                strs[i] = ft_substr(str , j, indexes[i]);
+            else
+                strs[i] = ft_substr(str , j, indexes[i]  - indexes[i - 1] - 1);
+            j = indexes[i] + 1;
+            i++;
+        }
     }
     j++;
     strs[i] = ft_substr(str , j - 1 ,ft_strlen(str - indexes[i]));
     i++;
     strs[i] = NULL;
+    
     return strs;
 }
+
+
+int arr_couter(char **strs)
+{
+    int len = 0;
+    while (strs[len])
+        len++;
+    return len;
+}
+
+
 
 int parsing(t_meta_data *data)
 {
     char **strs;
     strs = split_things(data->input , '|');
+
     int len = 0;
     while (strs[len])
-        ++len;
-    int  i = -1;
-    while (++i < len)
-        ft_lstadd_back(data->commands,ft_lstnew(strs[i]));
+        len++;
+    int  i = 0;
+    t_command *commands;
+    commands = malloc(len * sizeof(t_command *));
+
+    while (strs[i])
+    {
+        commands[i].whole_command = split_things(strs[i], ' ');
+        commands[i].cmd = commands[i].whole_command[0];
+        if (arr_couter(commands[i].whole_command) > 1)
+            commands[i].args = &commands[i].whole_command[1];
+        // ft_lstadd_back(data->commands, ft_lstnew(&commands[i]));
+        i++;
+    }
+
+
+    printf("%s\n", commands[0].cmd);
     return (0);
 }

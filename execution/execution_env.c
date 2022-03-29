@@ -30,11 +30,11 @@ int execution_env(t_meta_data *data)
     }
     else if(strcmp(data->input, "exit") == 0) // exit
         return (0);
-    else
-    {
-        ft_putstr_fd("invalid command\n", 1);
-        write(1,"\n",1);
-        return (1);
-    }
+    // else
+    // {
+    //     ft_putstr_fd("invalid command\n", 1);
+    //     write(1,"\n",1);
+    //     return (1);
+    // }
     return (1);
 }
