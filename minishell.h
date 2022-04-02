@@ -17,7 +17,7 @@ typedef struct s_metadata
 {
     char *input; /* readline input */
     struct s_env_data env_data; /* env structure */
-    struct s_list **commands; /* linked list of commands */
+    struct s_list *commands; /* linked list of commands */
     
 } t_meta_data;
  
