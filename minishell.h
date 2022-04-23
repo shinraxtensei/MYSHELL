@@ -34,5 +34,6 @@ int execution_env(t_meta_data *data);
 //--------- | parsing | -----------
 char **split_things(char *str , char c);
 int parsing(t_meta_data *data);
+void execution(t_meta_data *data);
 
 #endif

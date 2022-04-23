@@ -15,11 +15,13 @@ int main (int ac, char **argv, char **env)
     {
         i = -1;
         data->input = readline("minishell :");
-        if (!data->input)
-            exit(1);
+        // if (!data->input)
+        //     exit(1);
         parsing(data);
-        if (execution_env(data) == 0)
-            break ;
+        // if (execution_env(data) == 0)
+        //     break ;]
+
+        execution(data);
     }
     return 0;
 }
