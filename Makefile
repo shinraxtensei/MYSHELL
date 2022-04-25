@@ -1,7 +1,7 @@
 NAME = minishell
 
 SRCS = minishell.c parsing/envirement.c execution/env.c execution/export.c execution/execution_env.c\
-		parsing/parsing.c execution/execution.c
+		parsing/parsing.c execution/execution.c execution/builtin/pwd.c execution/builtin/cd.c
 
 OBJS	= $(SRCS:.c=.o)
 

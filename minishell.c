@@ -1,4 +1,21 @@
+/////////////////////////////////////////////#include "minishell.h"
 #include "minishell.h"
+
+void	ft_clear_data(t_list **lst)
+{
+
+	if (!lst)
+		return ;
+	while (*lst)
+	{
+		// free((*lst)->command->args);
+		free((*lst)->command->whole_command);
+		//free((*lst)->command->cmd);
+        //free((*lst)->command->option);
+		*lst = (*lst)->next;
+	}
+	*lst = NULL;
+}
 
 int main (int ac, char **argv, char **env)
 {
@@ -20,8 +37,10 @@ int main (int ac, char **argv, char **env)
         parsing(data);
         // if (execution_env(data) == 0)
         //     break ;]
-
+        //printf("%s\n",data->commands->command->cmd);
+        //printf("%s\n",data->commands->command->args[1]);
         execution(data);
+        ft_clear_data(&data->commands);
     }
     return 0;
 }

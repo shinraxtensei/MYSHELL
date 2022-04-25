@@ -34,6 +34,13 @@ int execution_env(t_meta_data *data);
 //--------- | parsing | -----------
 char **split_things(char *str , char c);
 int parsing(t_meta_data *data);
-void execution(t_meta_data *data);
 
+//--------- | execution | -----------
+
+void execution(t_meta_data *data);
+void exec_non_builtin(t_meta_data *data,int id);
+void exec_builtin(t_meta_data *data, int id);
+int check_exec(char *arr);
+void fun_pwd();
+void    fun_cd(t_meta_data *data);
 #endif
