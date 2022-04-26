@@ -5,6 +5,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <string.h>
+#include <paths.h>
 #include "libft/libft.h"
 
 typedef struct s_env_data
@@ -30,6 +31,7 @@ int ft_strcmp(char *s1, char *s2);
 void ft_env(t_meta_data *data);
 void ft_export(t_meta_data *data);
 int execution_env(t_meta_data *data);
+void create_env(t_meta_data  *data);
 
 //--------- | parsing | -----------
 char **split_things(char *str , char c);

@@ -23,6 +23,7 @@ int main (int ac, char **argv, char **env)
     (void) argv;   
     int i;
     t_meta_data *data;
+    
     data = malloc(sizeof(t_meta_data));
     data->commands = malloc(sizeof(t_list));
     data->commands = NULL;
@@ -32,13 +33,15 @@ int main (int ac, char **argv, char **env)
     {
         i = -1;
         data->input = readline("minishell :");
-        // if (!data->input)
-        //     exit(1);
+        if (data->input)
+            add_history(data->input);
         parsing(data);
         // if (execution_env(data) == 0)
         //     break ;]
         //printf("%s\n",data->commands->command->cmd);
         //printf("%s\n",data->commands->command->args[1]);
+        if (!ft_strncmp(data->input,"exit",4))
+            exit(1);
         execution(data);
         ft_clear_data(&data->commands);
     }

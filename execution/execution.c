@@ -28,6 +28,8 @@ void exec_non_builtin(t_meta_data *data,int id)
         tmp = ft_substr(data->env_data.env[i],5,ft_strlen(data->env_data.env[i]));
         arr = ft_split(tmp, ':');
         i = -1;
+        if (!execve(data->commands->command->cmd, data->commands->command->whole_command, data->env_data.env))
+            return ;
         while (arr[++i])
         {
             tmp = ft_strjoin(arr[i],"/");
@@ -39,8 +41,7 @@ void exec_non_builtin(t_meta_data *data,int id)
         while (arr[++i])
             free(arr[i]);
         free(arr);
-        if (!execve(tmp,data->commands->command->whole_command,data->env_data.env))
-            return ;
+        execve(tmp,data->commands->command->whole_command,data->env_data.env);
         free(tmp);
     }
     if (id != 0)
@@ -60,8 +61,6 @@ int check_exec(char *arr)
         return (0);
     else if (!ft_strncmp(arr,"env",3))
         return (0);
-    else if (!ft_strncmp(arr,"exit",4))
-        return (0);
     else
         return (1);
 }
@@ -79,11 +78,9 @@ void exec_builtin(t_meta_data *data, int id)
         else if (!ft_strncmp(data->commands->command->cmd,"unset",5))
             return ;
         else if (!ft_strncmp(data->commands->command->cmd,"export",6))
-            return ;
+            ft_export(data);
         else if (!ft_strncmp(data->commands->command->cmd,"env",3))
-            return ;
-        else if (!ft_strncmp(data->commands->command->cmd,"exit",4))
-            return ;
+            ft_env(data);
         else
             printf("Error\n");
     }
