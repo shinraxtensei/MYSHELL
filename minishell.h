@@ -11,6 +11,7 @@
 typedef struct s_env_data
 {
     char **env;
+    char **env_export;
     int shellevel;
 }t_env_data;
 
@@ -38,7 +39,7 @@ char **split_things(char *str , char c);
 int parsing(t_meta_data *data);
 
 //--------- | execution | -----------
-
+void sort_env(t_meta_data *data);
 void execution(t_meta_data *data);
 void exec_non_builtin(t_meta_data *data,int id);
 void exec_builtin(t_meta_data *data, int id);

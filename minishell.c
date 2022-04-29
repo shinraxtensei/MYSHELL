@@ -41,7 +41,7 @@ int main (int ac, char **argv, char **env)
         //printf("%s\n",data->commands->command->cmd);
         //printf("%s\n",data->commands->command->args[1]);
         if (!ft_strncmp(data->input,"exit",4))
-            exit(1);
+            return (0);
         execution(data);
         ft_clear_data(&data->commands);
     }
