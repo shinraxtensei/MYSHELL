@@ -5,12 +5,10 @@ void ft_export(t_meta_data *data)
     int i;
 
     i = -1;
-
-    sort_env(data);
     printf("hello\n");
     while (data->env_data.env_export[++i])
     {
-        ft_putstr_fd(ft_strjoin("1.", data->env_data.env_export[i]), 1);
+        ft_putstr_fd(data->env_data.env_export[i], 1);
         write(1,"\n",1);
     }
 }
@@ -21,14 +19,16 @@ void sort_env(t_meta_data *data)
     int j;
     int size;
     char tmp[9999];
-    i = 0;
-    while (data->env_data.env[i])
-        i++;
-    size = i;
-    data->env_data.env_export = malloc(sizeof(char *) * (i + 1));
+
+    size = 0;
+    while (data->env_data.env[size])
+        size++;
+    data->env_data.env_export = malloc(sizeof(char *) * (size + 1));
     i = -1;
     while(data->env_data.env[++i])
-        data->env_data.env_export[i] = data->env_data.env[i];
+    {
+        data->env_data.env_export[i] = ft_strjoin("declare -x", data->env_data.env[i]);
+    }
     data->env_data.env_export[i] = 0;
     i = 0;
     while (i < size)

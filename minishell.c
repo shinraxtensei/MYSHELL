@@ -36,6 +36,7 @@ int main (int ac, char **argv, char **env)
         if (data->input)
             add_history(data->input);
         parsing(data);
+        //sort_env(data);
         // if (execution_env(data) == 0)
         //     break ;]
         //printf("%s\n",data->commands->command->cmd);

@@ -2,20 +2,19 @@
 
 void execution(t_meta_data *data)
 {
-    int id;
-
-    id = fork();
     if (check_exec(data->commands->command->cmd))
-        exec_non_builtin(data,id);
+        exec_non_builtin(data);
     else
-        exec_builtin(data,id);
+        exec_builtin(data);
 }
 
-void exec_non_builtin(t_meta_data *data,int id)
+void exec_non_builtin(t_meta_data *data)
 {
     char **arr;
     char *tmp;
     int i;
+    int id;
+    id = fork();
     if (id == 0)
     {
         i = -1;
@@ -65,25 +64,20 @@ int check_exec(char *arr)
         return (1);
 }
 
-void exec_builtin(t_meta_data *data, int id)
+void exec_builtin(t_meta_data *data)
 {
-    if (id == 0)
-    {
-        if (!ft_strncmp(data->commands->command->cmd,"echo",4))
-            return ;
-        else if (!ft_strncmp(data->commands->command->cmd,"cd",2))
-            fun_cd(data);
-        else if (!ft_strncmp(data->commands->command->cmd,"pwd",3))
-            fun_pwd();
-        else if (!ft_strncmp(data->commands->command->cmd,"unset",5))
-            return ;
-        else if (!ft_strncmp(data->commands->command->cmd,"export",6))
-            ft_export(data);
-        else if (!ft_strncmp(data->commands->command->cmd,"env",3))
-            ft_env(data);
-        else
-            printf("Error\n");
-    }
-    if (id != 0)
-        wait(0);
+    if (!ft_strncmp(data->commands->command->cmd,"echo",4))
+        return ;
+    else if (!ft_strncmp(data->commands->command->cmd,"cd",2))
+        fun_cd(data);
+    else if (!ft_strncmp(data->commands->command->cmd,"pwd",3))
+        fun_pwd();
+    else if (!ft_strncmp(data->commands->command->cmd,"unset",5))
+        return ;
+    else if (!ft_strncmp(data->commands->command->cmd,"export",6))
+        ft_export(data);
+    else if (!ft_strncmp(data->commands->command->cmd,"env",3))
+        ft_env(data);
+    else
+        printf("Error\n");
 }
