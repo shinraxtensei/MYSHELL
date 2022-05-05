@@ -18,7 +18,7 @@ void sort_env(t_meta_data *data)
     int i;
     int j;
     int size;
-    char tmp[9999];
+    char *tmp;
 
     size = 0;
     while (data->env_data.env[size])
@@ -27,7 +27,7 @@ void sort_env(t_meta_data *data)
     i = -1;
     while(data->env_data.env[++i])
     {
-        data->env_data.env_export[i] = ft_strjoin("declare -x", data->env_data.env[i]);
+        data->env_data.env_export[i] = ft_strjoin("declare -x ", data->env_data.env[i]);
     }
     data->env_data.env_export[i] = 0;
     i = 0;
@@ -38,12 +38,13 @@ void sort_env(t_meta_data *data)
         {
             if (strcmp(data->env_data.env_export[i],data->env_data.env_export[j]) > 0)
             {
-                strcpy(tmp,data->env_data.env_export[j]);
-                strcpy(data->env_data.env_export[j],data->env_data.env_export[i]);
-                strcpy(data->env_data.env_export[i],tmp);
+                tmp = data->env_data.env_export[i];
+                data->env_data.env_export[i] = data->env_data.env_export[j];
+                data->env_data.env_export[j] = tmp;
             }
             j++;
         }
         i++;
     }
+
 }
