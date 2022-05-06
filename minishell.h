@@ -8,6 +8,18 @@
 #include <paths.h>
 #include "libft/libft.h"
 
+#include  <fcntl.h>                              
+                              
+#include  <stdlib.h>
+        
+#include  <sys/types.h> 
+#include  <sys/wait.h>           
+#include  <sys/stat.h>           
+#include  <termios.h>              
+#include  <unistd.h> 
+
+
+
 typedef struct s_env_data
 {
     char **env;
@@ -17,6 +29,7 @@ typedef struct s_env_data
 
 typedef struct s_metadata
 {
+    int command_count;
     char *input; /* readline input */
     struct s_env_data env_data; /* env structure */
     struct s_list *commands; /* linked list of commands */
@@ -46,4 +59,16 @@ void exec_builtin(t_meta_data *data);
 int check_exec(char *arr);
 void fun_pwd();
 void    fun_cd(t_meta_data *data);
+
+
+
+
+
+
+void herdoc(t_meta_data *data);
+int piwpiw(t_meta_data *data);
+
+
+
+
 #endif

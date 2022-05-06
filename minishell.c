@@ -8,14 +8,27 @@ void	ft_clear_data(t_list **lst)
 		return ;
 	while (*lst)
 	{
-		// free((*lst)->command->args);
-		free((*lst)->command->whole_command);
-		//free((*lst)->command->cmd);
-        //free((*lst)->command->option);
-		*lst = (*lst)->next;
+		(*lst)->command->args = NULL;
+		(*lst)->command->whole_command = NULL;
+		(*lst)->command->cmd = NULL;
+		*lst = (*lst)->next ;
 	}
 	*lst = NULL;
 }
+
+
+static int check_redirect(char *str)
+{
+    int i;
+    i = -1;
+    while (str[++i])
+    {
+        if (str[i] == '<' || str[i] == '>' || !ft_strncmp(&str[i], "<<", 2) || !ft_strncmp(&str[i], ">>", 2))
+            return (1);
+    }
+    return (0);
+}
+
 
 int main (int ac, char **argv, char **env)
 {
@@ -28,7 +41,7 @@ int main (int ac, char **argv, char **env)
     data->commands = malloc(sizeof(t_list));
     data->commands = NULL;
 
-    env_maker(env , data); // create envirement
+    env_maker(env , data);
     while(1)
     {
         i = -1;
@@ -36,15 +49,16 @@ int main (int ac, char **argv, char **env)
         if (data->input)
             add_history(data->input);
         parsing(data);
-        //sort_env(data);
-        // if (execution_env(data) == 0)
-        //     break ;]
-        //printf("%s\n",data->commands->command->cmd);
-        //printf("%s\n",data->commands->command->args[1]);
+
+        if (check_redirect(data->commands->command->unsplited_command))
+            herdoc(data);
         if (!ft_strncmp(data->input,"exit",4))
-            return (0);
+            exit (0);
         execution(data);
         ft_clear_data(&data->commands);
     }
     return 0;
 }
+
+
+

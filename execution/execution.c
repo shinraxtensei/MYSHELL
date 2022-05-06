@@ -1,11 +1,22 @@
 #include "../minishell.h"
 
+
+
 void execution(t_meta_data *data)
 {
-    if (check_exec(data->commands->command->cmd))
-        exec_non_builtin(data);
+    if (data->command_count == 1)
+
+    {    
+        if (check_exec(data->commands->command->cmd))
+            exec_non_builtin(data);
+        else
+            exec_builtin(data);
+    }
     else
-        exec_builtin(data);
+        piwpiw(data);
+
+
+
 }
 
 void exec_non_builtin(t_meta_data *data)
@@ -13,10 +24,11 @@ void exec_non_builtin(t_meta_data *data)
     char **arr;
     char *tmp;
     int i;
-    int id;
-    id = fork();
-    if (id == 0)
-    {
+    // int id;
+    // if (data->command_count == 1)
+    //     id = fork();
+    // if (id == 0)
+    // {
         i = -1;
         while (data->env_data.env[++i])
         {
@@ -42,9 +54,9 @@ void exec_non_builtin(t_meta_data *data)
         free(arr);
         execve(tmp,data->commands->command->whole_command,data->env_data.env);
         free(tmp);
-    }
-    if (id != 0)
-        wait(0);
+    // }
+    // if (id != 0)
+    //     wait(0);
 }
 int check_exec(char *arr)
 {

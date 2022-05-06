@@ -117,7 +117,10 @@ char **split_things(char *str , char c)
     j = 0;
     if(words == 1)
     {
-        strs[0] = ft_substr(str , 0, ft_strlen(str));
+
+        while (str[i] == ' ')
+            i++;
+        strs[0] = ft_substr(str , i, ft_strlen(str));
         strs[1] = NULL;
         return strs;
     }
@@ -181,10 +184,12 @@ int parsing(t_meta_data *data)
 
     strs = split_things(data->input , '|');
     while (strs[++len]);
+    data->command_count = len;
     t_command *commands;
     commands = malloc(len * sizeof(t_command *));
     while (i < len)
     {
+        commands[i].unsplited_command = strs[i];
         commands[i].whole_command = split_things(strs[i], ' ');
         commands[i].cmd = commands[i].whole_command[0];
         if (arr_couter(commands[i].whole_command) > 1)
@@ -192,5 +197,6 @@ int parsing(t_meta_data *data)
         ft_lstadd_back(&data->commands, ft_lstnew(&commands[i]));
         i++;
     } 
+
     return (0);
 }
