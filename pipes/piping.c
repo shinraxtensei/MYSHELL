@@ -1,4 +1,4 @@
-#include "../minishell.h"
+    #include "../minishell.h"
 
 
 int piwpiw(t_meta_data *data)
@@ -18,36 +18,42 @@ int piwpiw(t_meta_data *data)
             if (i == 0)
             {
                 dup2(fd[1], 1);
+                close(fd[0]);
+                // close(fd[1]);
             }
 
             else if (i == data->command_count - 1)
             {
-                // dup2(1, fd[1]);
                 dup2(fd[0], 0);
-                // close(0);
+                close(fd[1]);
+                // close(fd[0]);
             }
        
             else
             {
                 dup2(fd[0], 0);
-                dup2(fd[1], 1); 
+                dup2(fd[1], 1);
+                // close(fd[1]);
+                // close(fd[0]);
             }
             close(fd[0]);
             close(fd[1]);
-            exec_non_builtin(data);
+            if (check_exec(data->commands->command->cmd))
+                exec_non_builtin(data);
+            else
+                exec_builtin(data);
         }
         data->commands = data->commands->next;
         i++;
     }
+    close(fd[0]);
+    close(fd[1]);
     i = 0;
     while (i < data->command_count)
     {
         waitpid(id[i], 0, 0);
         i++;
     }
-
-    close(fd[0]);
-    close(fd[1]);
     free(id);
     return 0;
 }

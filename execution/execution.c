@@ -2,21 +2,25 @@
 
 
 
-void execution(t_meta_data *data)
+int execution(t_meta_data *data)
 {
+    int id;
     if (data->command_count == 1)
-
-    {    
-        if (check_exec(data->commands->command->cmd))
-            exec_non_builtin(data);
-        else
-            exec_builtin(data);
+    {
+        id = fork();
+        if (id == 0)
+        {
+            if (check_exec(data->commands->command->cmd))
+                exec_non_builtin(data);
+            else
+                exec_builtin(data);
+        }
+        waitpid(id, 0, 0);
     }
-    // else
-    //     piwpiw(data);
+    else
+        piwpiw(data);
 
-
-
+    return 0;
 }
 
 void exec_non_builtin(t_meta_data *data)
@@ -24,11 +28,6 @@ void exec_non_builtin(t_meta_data *data)
     char **arr;
     char *tmp;
     int i;
-    // int id;
-    // if (data->command_count == 1)
-    //     id = fork();
-    // if (id == 0)
-    // {
         i = -1;
         while (data->env_data.env[++i])
         {
@@ -54,10 +53,8 @@ void exec_non_builtin(t_meta_data *data)
         free(arr);
         execve(tmp,data->commands->command->whole_command,data->env_data.env);
         free(tmp);
-    // }
-    // if (id != 0)
-    //     wait(0);
 }
+
 int check_exec(char *arr)
 {
     if (!ft_strncmp(arr,"echo",4))

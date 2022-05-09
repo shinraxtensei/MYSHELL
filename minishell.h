@@ -50,10 +50,18 @@ void create_env(t_meta_data  *data);
 //--------- | parsing | -----------
 char **split_things(char *str , char c);
 int parsing(t_meta_data *data);
+int find_word(char *str , char word);
+int print_error(char *str);
+int check_inside_quotes(char *str, int index);
+int words_count(char *str , char c);
+int *quotes_indexer(char *str,char c ,int words);
+char **trim_things(char **strs);
+
+
 
 //--------- | execution | -----------
 // void sort_env(t_meta_data *data);
-void execution(t_meta_data *data);
+int execution(t_meta_data *data);
 void exec_non_builtin(t_meta_data *data);
 void exec_builtin(t_meta_data *data);
 int check_exec(char *arr);

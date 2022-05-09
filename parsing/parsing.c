@@ -1,115 +1,25 @@
 #include "../minishell.h"
 
-
-int find_word(char *str , char word)
-{
-    int i;
-    i = 0;
-    int quotes1 ;
-    int quotes2 ;
-    int quotes3 ;
-    quotes1 = 0;
-    quotes2 = 0;
-    quotes3 = 0;
-    while (str[i])
-    {
-        if (str[i] == '\"' && quotes2 % 2 == 0 && quotes3 % 2 == 0)
-            quotes1++;
-        if (str[i] == '\'' && quotes1 % 2 == 0  && quotes3 % 2 == 0)
-            quotes2++;
-        if ((str[i] == '(' || str[i] == ')' ) && quotes1 % 2 == 0  && quotes2 % 2 == 0)
-            quotes3++;
-        if (str[i] == word  && quotes1 % 2 == 0 && quotes2 % 2 == 0 && quotes3 % 2 == 0)
-            break;
-        i++;
-    }
-    return (i);
-}
-
-
-
-
-int print_error(char *str)
-{
-    printf("%s\n", str);
-    exit(1);
-    return (0);
-}
-
-
-static int words_count(char *str , char c)
+int words_count(char *str , char c)
 {
     int  i;
     int  words;
-    int quotes1;
-    int quotes2;
-    int quotes3;
 
     i = -1;
-    quotes1 = 0;
-    quotes3 = 0;
     words = 1;
-    quotes2 = 0;
     while (str[++i])
     {
-        if (str[i] == '\"' && quotes2 % 2 == 0 && quotes3 % 2 == 0)
-            quotes1++;
-        if (str[i] == '\'' && quotes1 % 2 == 0  && quotes3 % 2 == 0)
-            quotes2++;
-         if ((str[i] == '(' || str[i] == ')' ) && quotes1 % 2 == 0  && quotes2 % 2 == 0)
-            quotes3++;
-        if ((str[i] == c) && quotes1 % 2 == 0 && quotes2 % 2 == 0 && quotes3 % 2 == 0)
+        if ((str[i] == c) && check_inside_quotes(str, i) == 1)
         {
             while (str[i + 1] == c)
                 i++;
             words++;
         }
     }
-    if(quotes1 % 2 != 0 || quotes2 % 2 != 0)
+    if(check_inside_quotes(str, ft_strlen(str) ) == 0)
         print_error("9ad l quotes");
     return (words);
 }
-
-static int *quotes_indexer(char *str,char c ,int words)
-{
-    int *indexes;
-    int i;
-    int j;
-    int quotes1;
-    int quotes2;
-    int quotes3;
-
-    i = -1;
-    j = 0;
-    quotes1 = 0;
-    quotes2 = 0;
-    quotes3 = 0;
-    indexes = malloc (sizeof(int) * words);
-    while (str[++i])
-    {
-        if(str[0] == ' ')
-            i++;
-        if (str[i] == '\"' && quotes2 % 2 == 0 && quotes3 % 2 == 0)
-            quotes1++;
-        if (str[i] == '\'' && quotes1 % 2 == 0  && quotes3 % 2 == 0)
-            quotes2++;
-        if ((str[i] == '(' || str[i] == ')' ) && quotes1 % 2 == 0  && quotes2 % 2 == 0)
-            quotes3++;
-        if ((str[i] == c) && quotes1 % 2 == 0 && quotes2 % 2 == 0 && quotes3 % 2 == 0)
-        {
-            while (str[i + 1] == c)
-                i++;
-            indexes[j] = i;
-            j++;
-        }
-    }
-    if(quotes1 % 2 != 0 || quotes2 % 2 != 0)
-        print_error("9ad l quotes");
-    indexes[j] = -1;
-    return (indexes);
-}
-
-
 
 char **split_things(char *str , char c)
 {
@@ -159,23 +69,6 @@ char **split_things(char *str , char c)
     return strs;
 }
 
-char **trim_things(char **strs)
-{
-    int i;
-    i = -1;
-    while(strs[++i])
-        strs[i] = ft_strtrim(strs[i] , "\"");
-    i = -1;
-    while(strs[++i])
-        strs[i] = ft_strtrim(strs[i] , "\'");
-    i = -1;
-    while(strs[++i])
-        strs[i] = ft_strtrim(strs[i] , "(");
-    i = -1;
-    while(strs[++i])
-        strs[i] = ft_strtrim(strs[i] , ")");
-    return (strs);
-}
 
 
 
@@ -206,10 +99,12 @@ int parsing(t_meta_data *data)
     {
         commands[i].unsplited_command = strs[i];
         commands[i].whole_command = trim_things(split_things(strs[i] , ' '));
-
-        int  j = -1;
-        while(commands[i].whole_command[++j])
-            printf("%s|\n", commands[i].whole_command[j]);
+        int j = 0;
+        while (commands[i].whole_command[j])
+        {
+            printf("|%s|\n", commands[i].whole_command[j]);
+            j++;
+        }
         commands[i].cmd = commands[i].whole_command[0];
         if (arr_couter(commands[i].whole_command) > 1)
             commands[i].args = &commands[i].whole_command[1];
