@@ -12,8 +12,8 @@ void execution(t_meta_data *data)
         else
             exec_builtin(data);
     }
-    else
-        piwpiw(data);
+    // else
+    //     piwpiw(data);
 
 
 

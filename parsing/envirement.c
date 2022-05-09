@@ -54,6 +54,6 @@ int env_maker(char **env, t_meta_data *data)
 {
     env_setup (env, data);
     shelllevel_upddater(data);
-    sort_env(data);
+    export_setup(data);
     return 0;
 }

@@ -52,7 +52,7 @@ char **split_things(char *str , char c);
 int parsing(t_meta_data *data);
 
 //--------- | execution | -----------
-void sort_env(t_meta_data *data);
+// void sort_env(t_meta_data *data);
 void execution(t_meta_data *data);
 void exec_non_builtin(t_meta_data *data);
 void exec_builtin(t_meta_data *data);
@@ -61,14 +61,19 @@ void fun_pwd();
 void    fun_cd(t_meta_data *data);
 
 
+// export
+void ft_export(t_meta_data *data);
+void add_args_to_export(t_meta_data *data);
+void    sort_export(t_meta_data *data);
+int check_args_for_export(char **args);
+void export_setup(t_meta_data *data);
 
 
 
 
+
+// //--------- | redirection | -----------
 void herdoc(t_meta_data *data);
 int piwpiw(t_meta_data *data);
-
-
-
 
 #endif

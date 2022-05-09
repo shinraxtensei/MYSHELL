@@ -16,24 +16,11 @@ void	ft_clear_data(t_list **lst)
 	*lst = NULL;
 }
 
-
-static int check_redirect(char *str)
-{
-    int i;
-    i = -1;
-    while (str[++i])
-    {
-        if (str[i] == '<' || str[i] == '>' || !ft_strncmp(&str[i], "<<", 2) || !ft_strncmp(&str[i], ">>", 2))
-            return (1);
-    }
-    return (0);
-}
-
-
 int main (int ac, char **argv, char **env)
 {
     (void) ac;
     (void) argv;   
+
     int i;
     t_meta_data *data;
     
@@ -50,13 +37,13 @@ int main (int ac, char **argv, char **env)
             add_history(data->input);
         parsing(data);
 
-        if (check_redirect(data->commands->command->unsplited_command))
-            herdoc(data);
         if (!ft_strncmp(data->input,"exit",4))
             exit (0);
         execution(data);
         ft_clear_data(&data->commands);
     }
+
+  
     return 0;
 }
 
