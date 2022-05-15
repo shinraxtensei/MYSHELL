@@ -103,10 +103,6 @@ int herdoc_redirection(t_meta_data *data, char *str , int index);
 int ft_echo(t_meta_data *data);
 int check_option(t_meta_data *data);
 
-
-
-
-
 // unset
 void ft_unset(t_meta_data *data);
 char **delete_value(char **env,int pos);
