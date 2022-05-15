@@ -30,6 +30,7 @@ int check_inside_quotes(char *str, int index)
         else
             return (0);
 }
+
 int find_word(char *str , char word)
 {
     int i;

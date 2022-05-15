@@ -6,7 +6,7 @@
 /*   By: ahouari <ahouari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 08:38:57 by ahouari           #+#    #+#             */
-/*   Updated: 2022/05/05 16:02:06 by ahouari          ###   ########.fr       */
+/*   Updated: 2022/05/15 10:26:04 by ahouari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,40 @@
 # include <unistd.h>
 # include "../minishell.h"
 
+
+#define READ 0
+#define WRITE 1
+
+#define INPUT_REDIRECTION 2
+#define OUTPUT_REDIRECTION 3
+#define APPEND 4
+#define HERDOC 7
+#define NONE -1
+
+
+typedef struct s_redirict
+{
+    int redirection_type;
+    int first_pos;
+    int output_fd;
+    char *output_file;
+    int input_fd;
+    char *input_file;
+    int herdoc_fd;
+    char *herdoc_limitor;
+} t_redirict;
+
+
+
+
 typedef struct s_command
 {
     char **whole_command;
     char *unsplited_command;
     char *cmd;
     char **args;
-
-} t_command ;
+    t_redirict tokens;
+}   t_command ;
 
 typedef struct s_list
 {

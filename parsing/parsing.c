@@ -71,8 +71,6 @@ char **split_things(char *str , char c)
 
 
 
-
-
 int arr_couter(char **strs)
 {
     int len = 0;
@@ -94,22 +92,20 @@ int parsing(t_meta_data *data)
     data->command_count = len;
     t_command *commands;
     commands = malloc(( 1 + len) * sizeof(t_command *));
+
     i = 0;
     while (i < len)
     {
+
+        
         commands[i].unsplited_command = strs[i];
         commands[i].whole_command = trim_things(split_things(strs[i] , ' '));
-        int j = 0;
-        while (commands[i].whole_command[j])
-        {
-            printf("|%s|\n", commands[i].whole_command[j]);
-            j++;
-        }
         commands[i].cmd = commands[i].whole_command[0];
         if (arr_couter(commands[i].whole_command) > 1)
             commands[i].args = &commands[i].whole_command[1];
         ft_lstadd_back(&data->commands, ft_lstnew(&commands[i]));
         i++;
     }
+    redirection_preparations(data);
     return (0);
 }

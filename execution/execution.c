@@ -1,6 +1,4 @@
-#include "../minishell.h"
-
-
+#include"../minishell.h"
 
 int execution(t_meta_data *data)
 {
@@ -29,6 +27,7 @@ void exec_non_builtin(t_meta_data *data)
     char *tmp;
     int i;
         i = -1;
+  
         while (data->env_data.env[++i])
         {
             if (!ft_strncmp(data->env_data.env[i],"PATH",4))
@@ -82,7 +81,7 @@ void exec_builtin(t_meta_data *data)
     else if (!ft_strncmp(data->commands->command->cmd,"pwd",3))
         fun_pwd();
     else if (!ft_strncmp(data->commands->command->cmd,"unset",5))
-        return ;
+        ft_unset(data);
     else if (!ft_strncmp(data->commands->command->cmd,"export",6))
         ft_export(data);
     else if (!ft_strncmp(data->commands->command->cmd,"env",3))

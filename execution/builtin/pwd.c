@@ -6,4 +6,5 @@ void fun_pwd()
 
     // printf("%s\n",getcwd(arr,90000));
     ft_putstr_fd(getcwd(arr,90000),1);
+    ft_putchar_fd('\n',1);
 }

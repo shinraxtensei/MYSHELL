@@ -3,20 +3,19 @@
 
 #include <stdio.h>
 #include <readline/readline.h>
-#include <readline/history.h>
+// #include <readline/history.h>
 #include <string.h>
 #include <paths.h>
-#include "libft/libft.h"
-
-#include  <fcntl.h>                              
-                              
-#include  <stdlib.h>
-        
+#include  <fcntl.h>                                        
+#include  <stdlib.h>        
 #include  <sys/types.h> 
 #include  <sys/wait.h>           
 #include  <sys/stat.h>           
 #include  <termios.h>              
 #include  <unistd.h> 
+#include "libft/libft.h"
+
+
 
 
 
@@ -70,18 +69,47 @@ void    fun_cd(t_meta_data *data);
 
 
 // export
+// void ft_export(t_meta_data *data);
+// void add_args_to_export(t_meta_data *data);
+//void    sort_export(t_meta_data *data);
+// int check_args_for_export(char **args);
+// void export_setup(t_meta_data *data);
+
 void ft_export(t_meta_data *data);
-void add_args_to_export(t_meta_data *data);
-void    sort_export(t_meta_data *data);
+char **add_args(char *arg, char **env);
+void    sort_export(char **env);
 int check_args_for_export(char **args);
 void export_setup(t_meta_data *data);
+char **check_value(char **args, char **env);
 
 
 
-
-
-// //--------- | redirection | -----------
-void herdoc(t_meta_data *data);
+// //--------- | pipes | -----------
 int piwpiw(t_meta_data *data);
+int herdoc(t_meta_data *data);
+
+// //--------- | redirection preparation | -----------
+
+int redirection_preparations(t_meta_data *data);
+char *find_next_word(char *str);
+char *find_prev_word(char *str , int index);
+int append_redirection( t_meta_data *data, char *str , int index);
+int output_redirection(t_meta_data *data, char *str , int index);
+int herdoc_redirection(t_meta_data *data, char *str , int index);
+
+
+
+// echo 
+int ft_echo(t_meta_data *data);
+int check_option(t_meta_data *data);
+
+
+
+
+
+// unset
+void ft_unset(t_meta_data *data);
+char **delete_value(char **env,int pos);
+
 
 #endif

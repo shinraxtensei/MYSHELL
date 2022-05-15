@@ -19,8 +19,7 @@ void	ft_clear_data(t_list **lst)
 int main (int ac, char **argv, char **env)
 {
     (void) ac;
-    (void) argv;   
-
+    (void) argv;
     int i;
     t_meta_data *data;
     
@@ -32,9 +31,11 @@ int main (int ac, char **argv, char **env)
     while(1)
     {
         i = -1;
+        // sig_init();
         data->input = readline("minishell :");
         if (data->input)
             add_history(data->input);
+
         parsing(data);
 
         if (!ft_strncmp(data->input,"exit",4))
@@ -42,10 +43,5 @@ int main (int ac, char **argv, char **env)
         execution(data);
         ft_clear_data(&data->commands);
     }
-
-  
     return 0;
 }
-
-
-
