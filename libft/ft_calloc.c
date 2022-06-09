@@ -5,20 +5,23 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahouari <ahouari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/11 08:35:30 by ahouari           #+#    #+#             */
-/*   Updated: 2022/02/11 08:40:15 by ahouari          ###   ########.fr       */
+/*   Created: 2022/06/05 08:29:06 by ahouari           #+#    #+#             */
+/*   Updated: 2022/06/05 08:35:46 by ahouari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t count, size_t size)
+void	*ft_calloc(size_t n, size_t size)
 {
-	void	*ptr;
+	void	*mem;
+	size_t	i;
 
-	ptr = malloc(count * size);
-	if (!ptr)
+	i = 0;
+	mem = (void *)malloc(size * n);
+	if (!mem)
 		return (NULL);
-	ft_bzero(ptr, count * size);
-	return (ptr);
+	while (i < n * size)
+		((char *)mem)[i++] = 0;
+	return (mem);
 }

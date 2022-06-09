@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahouari <ahouari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/11 08:37:26 by ahouari           #+#    #+#             */
-/*   Updated: 2022/02/11 08:37:28 by ahouari          ###   ########.fr       */
+/*   Created: 2022/06/05 08:34:12 by ahouari           #+#    #+#             */
+/*   Updated: 2022/06/05 08:37:32 by ahouari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,5 @@ void	ft_putendl_fd(char *s, int fd)
 	if (!s)
 		return ;
 	ft_putstr_fd(s, fd);
-	ft_putchar_fd('\n', fd);
+	write(fd, "\n", 1);
 }

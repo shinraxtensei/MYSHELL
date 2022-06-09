@@ -5,22 +5,35 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahouari <ahouari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/11 08:37:52 by ahouari           #+#    #+#             */
-/*   Updated: 2022/02/11 08:37:53 by ahouari          ###   ########.fr       */
+/*   Created: 2022/06/05 08:34:25 by ahouari           #+#    #+#             */
+/*   Updated: 2022/06/05 08:37:56 by ahouari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s1)
+char	*ft_strdup(const char *src)
 {
-	char	*dup;
-	size_t	len;
+	char			*ptr;
+	unsigned int	len_src;
+	int				i;
 
-	len = ft_strlen(s1) + 1;
-	dup = malloc(len);
-	if (!dup)
+	i = 0;
+	len_src = ft_strlen(src);
+	if (len_src == 0)
+	{
+		ptr = malloc(sizeof(char));
+		ptr[0] = '\0';
+		return (ptr);
+	}
+	ptr = malloc(sizeof(*ptr) * len_src + 1);
+	if (ptr == NULL)
 		return (NULL);
-	ft_strlcpy(dup, s1, len);
-	return (dup);
+	while (src[i] != '\0')
+	{
+		ptr[i] = src[i];
+		i++;
+	}
+	ptr[i] = '\0';
+	return (ptr);
 }

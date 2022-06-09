@@ -5,86 +5,67 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahouari <ahouari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/11 08:37:40 by ahouari           #+#    #+#             */
-/*   Updated: 2022/05/09 11:36:22 by ahouari          ###   ########.fr       */
+/*   Created: 2022/06/05 08:34:19 by ahouari           #+#    #+#             */
+/*   Updated: 2022/06/05 08:37:49 by ahouari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	clear(char **arr)
+static int	nb_words(const char *s, char c)
 {
-	size_t	i;
+	int		i;
+	int		nb;
 
 	i = 0;
-	while (arr[i])
-		free(arr[i++]);
-	free(arr);
-}
-
-static int	count_words(char const *str, char c)
-{
-	int	count;
-	int	i;
-
-	count = 0;
-	i = 0;
-	while (str[i])
+	nb = 0;
+	while (s[i])
 	{
-		if (str[i] == c)
-		{
-			i++;  
-			continue;
-		}
-		count++;
-		while (str[i] != c && str[i])
-			i++;
+		if (s[i] != c && (s[i + 1] == 0 || s[i + 1] == c))
+			nb++;
+		i++;
 	}
-	return (count);
+	return (nb);
 }
 
-static char	**fill_array_with_words(char **arr, char const *str, char c)
+static char	**fill_split(const char *s, char c, int words, char **split)
 {
-	int	index;
-	int	i;
-	int	tmp_i;
+	int		i;
+	int		word;
+	int		letters;
 
-	index = 0;
 	i = 0;
-	while (str[i])
+	word = 0;
+	while (word < words)
 	{
-		if (str[i] == c)
-		{
+		while (s[i] && s[i] == c)
 			i++;
-			continue ;
-		}
-		tmp_i = i;
-		while (str[i] != c && str[i])
-			i++;
-		arr[index] = malloc(i - tmp_i + 1);
-		if (!arr[index])
+		letters = 0;
+		while (s[i + letters] && s[i + letters] != c)
+			letters++;
+		split[word] = (char *)malloc(sizeof(char) * (letters + 1));
+		if (!split[word])
 			return (NULL);
-		ft_strlcpy(arr[index++], str + tmp_i, i - tmp_i + 1);
+		letters = 0;
+		while (s[i] && s[i] != c)
+			split[word][letters++] = s[i++];
+		split[word++][letters] = 0;
 	}
-	arr[index] = NULL;
-	return (arr);
+	split[word] = 0;
+	return (split);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(const char *s, char c)
 {
-	char	**array;
-	int		words_count;
+	int		words;
+	char	**split;
 
 	if (!s)
 		return (NULL);
-	words_count = count_words(s, c);
-	array = malloc((words_count + 1) * sizeof(char *));
-	if (!array)
+	words = nb_words(s, c);
+	split = (char **)malloc(sizeof(char *) * (words + 1));
+	if (!split)
 		return (NULL);
-	if (!fill_array_with_words(array, s, c))
-	{
-		clear(array);
-		return (NULL);
-	}
-	return (array);
+	fill_split(s, c, words, split);
+	return (split);
 }

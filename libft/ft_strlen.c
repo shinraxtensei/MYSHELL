@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahouari <ahouari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/11 08:38:15 by ahouari           #+#    #+#             */
-/*   Updated: 2022/02/11 08:38:16 by ahouari          ###   ########.fr       */
+/*   Created: 2022/06/05 08:34:35 by ahouari           #+#    #+#             */
+/*   Updated: 2022/06/05 08:38:10 by ahouari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 size_t	ft_strlen(const char *str)
 {
-	size_t	len;
+	const char		*s;
 
-	len = 0;
-	while (str[len])
-		len++;
-	return (len);
+	s = str;
+	while (*s)
+		s++;
+	return (s - str);
 }

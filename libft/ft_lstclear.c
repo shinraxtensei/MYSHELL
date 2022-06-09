@@ -3,32 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eassamer <eassamer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahouari <ahouari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/11 08:36:30 by ahouari           #+#    #+#             */
-/*   Updated: 2022/04/23 17:15:23 by eassamer         ###   ########.fr       */
+/*   Created: 2022/06/05 08:33:37 by ahouari           #+#    #+#             */
+/*   Updated: 2022/06/05 08:36:39 by ahouari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// void del(void *arg)
-// {
-//     free(arg);
-// }
+void	ft_lstclear(t_list **lst, void (*del)(void*))
+{
+	t_list	*index;
+	t_list	*temp;
 
-// void	ft_lstclear(t_list **lst, void (*del)(void *))
-// {
-
-// 	if (!lst || !del)
-// 		return ;
-// 	while (*lst)
-// 	{
-// 		del((*lst)->command->args);
-// 		del((*lst)->command->whole_command);
-// 		del((*lst)->command->cmd);
-//         del((*lst)->command->option);
-// 		*lst = (*lst)->next;
-// 	}
-// 	*lst = NULL;
-// }
+	index = *lst;
+	while (index->next != 0)
+	{
+		temp = index->next;
+		ft_lstdelone(index, del);
+		index = temp;
+	}
+	ft_lstdelone(index, del);
+	*lst = NULL;
+}

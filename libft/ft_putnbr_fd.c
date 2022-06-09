@@ -5,24 +5,38 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahouari <ahouari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/11 08:37:31 by ahouari           #+#    #+#             */
-/*   Updated: 2022/02/11 08:37:32 by ahouari          ###   ########.fr       */
+/*   Created: 2022/06/05 08:34:14 by ahouari           #+#    #+#             */
+/*   Updated: 2022/06/05 08:37:36 by ahouari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+static void	ft_write(int fd, char c)
+{
+	write(fd, &c, 1);
+}
+
 void	ft_putnbr_fd(int n, int fd)
 {
-	long long	nbr;
-
-	nbr = (long long)n;
-	if (nbr < 0)
+	if (n < 0)
 	{
-		ft_putchar_fd('-', fd);
-		nbr *= -1;
+		ft_write(fd, '-');
+		if (n == -2147483648)
+		{
+			n = n / 10;
+			ft_putnbr_fd(-n, fd);
+			ft_write(fd, '8');
+		}
+		else
+			ft_putnbr_fd(-n, fd);
 	}
-	if (nbr / 10)
-		ft_putnbr_fd(nbr / 10, fd);
-	ft_putchar_fd(nbr % 10 + '0', fd);
+	else
+	{
+		if (n > 9)
+		{
+			ft_putnbr_fd(n / 10, fd);
+		}
+		ft_write(fd, '0' + n % 10);
+	}
 }

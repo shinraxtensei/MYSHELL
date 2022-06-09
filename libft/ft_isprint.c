@@ -5,12 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahouari <ahouari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/11 08:35:53 by ahouari           #+#    #+#             */
-/*   Updated: 2022/02/11 08:35:56 by ahouari          ###   ########.fr       */
+/*   Created: 2022/06/05 08:29:06 by ahouari           #+#    #+#             */
+/*   Updated: 2022/06/05 08:36:21 by ahouari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isprint(int c)
+int	ft_isprint(int p)
 {
-	return (c >= 32 && c <= 126);
+	if (p > 31 && p < 127)
+		return (1);
+	return (0);
 }

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahouari <ahouari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/11 08:38:05 by ahouari           #+#    #+#             */
-/*   Updated: 2022/02/11 08:38:07 by ahouari          ###   ########.fr       */
+/*   Created: 2022/06/05 08:34:30 by ahouari           #+#    #+#             */
+/*   Updated: 2022/06/05 08:38:03 by ahouari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,23 @@
 
 size_t	ft_strlcat(char *dest, const char *src, size_t size)
 {
-	size_t	dest_len;
-	size_t	src_len;
-	size_t	len;
 	size_t	i;
+	size_t	a;
 
-	dest_len = ft_strlen(dest);
-	src_len = ft_strlen(src);
-	len = dest_len;
-	if (size <= dest_len)
-		return (size + src_len);
 	i = 0;
-	while (src[i] && len < size - 1)
-		dest[len++] = src[i++];
-	dest[len] = 0;
-	return (dest_len + src_len);
+	a = 0;
+	while (dest[i])
+		i++;
+	while (src[a] && i + a < size - 1 && size != 0)
+	{
+		dest[i + a] = src[a];
+		a++;
+	}
+	if (size != 0 || size < i)
+		dest[i + a] = 0;
+	while (src[a])
+		a++;
+	if (size < i)
+		return (size + a);
+	return (i + a);
 }

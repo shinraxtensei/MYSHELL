@@ -5,12 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahouari <ahouari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/11 08:38:50 by ahouari           #+#    #+#             */
-/*   Updated: 2022/02/11 08:38:53 by ahouari          ###   ########.fr       */
+/*   Created: 2022/06/05 08:35:02 by ahouari           #+#    #+#             */
+/*   Updated: 2022/06/05 08:38:46 by ahouari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_toupper(int c)
+int	ft_toupper(int u)
 {
-	return (c - (c >= 'a' && c <= 'z') * 32);
+	if (u >= 'a' && u <= 'z')
+		return (u - 32);
+	return (u);
 }

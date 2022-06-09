@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahouari <ahouari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/11 08:36:18 by ahouari           #+#    #+#             */
-/*   Updated: 2022/03/29 13:13:07 by ahouari          ###   ########.fr       */
+/*   Created: 2022/06/05 08:33:32 by ahouari           #+#    #+#             */
+/*   Updated: 2022/06/05 08:36:33 by ahouari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 {
 	t_list	*last;
 
-	if (!lst || !new)
-		return ;
-	if (*lst)
+	if (*lst == NULL)
 	{
-		last = ft_lstlast(*lst);
-		last->next = new;
+		ft_lstadd_front(lst, new);
+		return ;
 	}
-	else
-		*lst = new;
+	last = *lst;
+	while (last->next != 0)
+		last = last->next;
+	last->next = new;
 }

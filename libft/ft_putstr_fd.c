@@ -5,17 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahouari <ahouari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/11 08:37:35 by ahouari           #+#    #+#             */
-/*   Updated: 2022/02/11 08:37:36 by ahouari          ###   ########.fr       */
+/*   Created: 2022/06/05 08:34:16 by ahouari           #+#    #+#             */
+/*   Updated: 2022/06/05 08:37:39 by ahouari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr_fd(char *str, int fd)
+void	ft_putstr_fd(char *s, int fd)
 {
-	if (!str)
+	size_t	s_len;
+
+	if (!s)
 		return ;
-	while (*str)
-		write(fd, str++, 1);
+	s_len = ft_strlen(s);
+	write(fd, s, s_len);
 }

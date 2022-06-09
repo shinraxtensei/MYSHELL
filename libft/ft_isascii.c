@@ -5,12 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahouari <ahouari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/11 08:35:45 by ahouari           #+#    #+#             */
-/*   Updated: 2022/02/11 08:35:47 by ahouari          ###   ########.fr       */
+/*   Created: 2022/06/05 08:29:06 by ahouari           #+#    #+#             */
+/*   Updated: 2022/06/05 08:36:15 by ahouari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isascii(int c)
+int	ft_isascii(int t)
 {
-	return (c >= 0 && c <= 127);
+	if (t >= 0 && t <= 127)
+		return (1);
+	return (0);
 }

@@ -5,31 +5,38 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahouari <ahouari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/11 08:36:51 by ahouari           #+#    #+#             */
-/*   Updated: 2022/03/28 17:37:27 by ahouari          ###   ########.fr       */
+/*   Created: 2022/06/05 08:33:46 by ahouari           #+#    #+#             */
+/*   Updated: 2022/06/05 08:36:54 by ahouari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
-// {
-// 	t_list	*new;
-// 	t_list	*newdlst;
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+{
+	t_list	*head;
+	t_list	*current;
+	t_list	*previous;
 
-// 	if (!lst || !f)
-// 		return (NULL);
-// 	newdlst = NULL;
-// 	while (lst)
-// 	{
-// 		new = ft_lstnew(f(&lst->command));
-// 		if (!new)
-// 		{
-// 			ft_lstclear(&newdlst, del);
-// 			return (NULL);
-// 		}
-// 		ft_lstadd_back(&newdlst, new);
-// 		lst = lst->next;
-// 	}
-// 	return (newdlst);
-// }
+	if (!lst)
+		return (NULL);
+	current = ft_lstnew(f(lst->content));
+	if (!current)
+		return (NULL);
+	head = current;
+	previous = current;
+	lst = lst->next;
+	while (lst != 0)
+	{
+		current = ft_lstnew(f(lst->content));
+		if (!current)
+		{
+			ft_lstclear(&head, del);
+			return (NULL);
+		}
+		previous->next = current;
+		previous = current;
+		lst = lst->next;
+	}
+	return (head);
+}

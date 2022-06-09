@@ -1,41 +1,74 @@
-NAME := libft.a
+# -*-🦕-*- Make Libft -*-🦕-*-
 
-SRCS := ft_atoi.c    ft_isalpha.c ft_memchr.c  ft_memset.c  ft_strlcat.c ft_strnstr.c	\
-		ft_bzero.c   ft_isascii.c ft_memcmp.c  ft_strchr.c  ft_strlcpy.c ft_strrchr.c	\
-		ft_calloc.c  ft_isdigit.c ft_memcpy.c  ft_strdup.c  ft_strlen.c  ft_substr.c	\
-		ft_isalnum.c ft_isprint.c ft_memmove.c ft_strncmp.c ft_tolower.c ft_toupper.c	\
-		ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c ft_strmapi.c ft_striteri.c		\
-		ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c
+NAME		= libft.a
 
-SRCSB := $(SRCS) ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c	\
-		ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
+# -*- Definitions of variables -*-
 
-OBJS := $(SRCS:.c=.o)
+SRCS		= ${shell find . -type f \( -name "ft_*.c" ! -name "ft_lst*.c" ! -name "*bonus.c" ! -wholename "./TestLibft/*.c" \) | cut -d'/' -f2-}
+SRCS_BONUS	= ${shell find . -type f \( -name "ft_*.c" ! -wholename "./TestLibft/*.c" \) | cut -d'/' -f2-}
 
-OBJSB := $(SRCSB:.c=.o)
+OBJS_DIR	= objs
+OBJS		= ${addprefix ${OBJS_DIR}/,${SRCS:.c=.o}}
+OBJS_BONUS	= ${addprefix ${OBJS_DIR}/,${SRCS_BONUS:.c=.o}}
 
-CFLAGS := -Wall -Wextra -Werror
+HEADER		= libft.h
+HEADERS_OWN = libft.h libft_bonus.h
 
-.PHONY: all clean fclean re
+CC			= gcc
+RM			= rm -f
+
+CFLAGS		= -Wall -Wextra -Werror
+
+# Colors
+
+GRAY		= \e[1;30m
+GREEN 		= \e[1;32m
+DARK_GREEN	= \e[0;32m
+YELLOW		= \e[1;33m
+BLUE		= \e[1;34m
+PURPLE		= \e[1;35m
+CYAN		= \e[1;36m
+WHITE		= \e[1;37m
+NORMAL		= \e[0;37m
+END			= \e[0m
+
+# -*- The Rules -*-
+
+#	Implicit rules
+
+${OBJS_DIR}/%.o: %.c ${HEADER}
+	@mkdir -p objs
+	@${CC} ${FLAGS} -o $@ -c $<
+
+#	Active rules
 
 all: $(NAME)
-		@echo libft is  ready
 
-#bonus: $(OBJSB)
-#	ar -crs $(NAME) $^
+$(NAME): ${OBJS} 
+	@ar rcs ${NAME} ${OBJS}
+	@printf "${GREEN}Compiled Libft${END}]\n\n"
+	@printf "${END}"
 
-$(NAME): $(OBJSB)
-		@ar -crs $@ $^
+bonus: ${OBJS} ${OBJS_BONUS} 
+	@ar rcs ${NAME} ${OBJS} ${OBJS_BONUS}
+	@printf "[${GREEN}Compiled Libft -bonus ${WHITE}]${END}\n"
+	@printf "${END}"
 
-%.o: %.c
-	gcc $(CFLAGS) -c $< -o $@
+#	Cleaning rules
 
 clean:
-	rm -f $(OBJSB)
+	@${RM} ${OBJS_BONUS}
+	@rm -rf objs
+	@printf "${GREEN}libft cleaned${END}\n"
+
 
 fclean: clean
-	rm -f $(NAME)
+	@${RM} ${NAME}
 
-re: @fclean all
 
-.PHONY : all clean fclean re
+fclean_no_clean:
+	@${RM} ${NAME}
+
+re: fclean all
+
+.PHONY: all clean fclean fclean_no_clean re

@@ -5,12 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahouari <ahouari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/11 08:35:49 by ahouari           #+#    #+#             */
-/*   Updated: 2022/02/11 08:35:51 by ahouari          ###   ########.fr       */
+/*   Created: 2022/06/05 08:29:06 by ahouari           #+#    #+#             */
+/*   Updated: 2022/06/05 08:36:18 by ahouari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isdigit(int c)
+int	ft_isdigit(int n)
 {
-	return (c >= '0' && c <= '9');
+	if (n >= '0' && n <= '9')
+		return (1);
+	return (0);
 }
